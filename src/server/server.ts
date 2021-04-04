@@ -20,7 +20,11 @@ class App {
 
         io.on('connection',(socket: socketIO.Socket)=>{
             console.log(`utente ${socket.id} connesso al socket server`);
-        })
+            socket.emit('message',`Buongiorno Utente ${socket.id}`);
+            socket.on('disconnect',()=>{
+                console.log(`l'utente ${socket.id} si è disconnesso`);
+            });
+        });
 
     }
 

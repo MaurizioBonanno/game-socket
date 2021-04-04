@@ -17,6 +17,10 @@ class App {
         const io = new socket_io_1.default.Server(this.server);
         io.on('connection', (socket) => {
             console.log(`utente ${socket.id} connesso al socket server`);
+            socket.emit('message', `Buongiorno Utente ${socket.id}`);
+            socket.on('disconnect', () => {
+                console.log(`l'utente ${socket.id} si è disconnesso`);
+            });
         });
     }
     Start() {
