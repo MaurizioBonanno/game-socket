@@ -1,17 +1,27 @@
+import express from "express"
+import path from "path"
 import http from "http"
 import socketIO from "socket.io"
 
-const port = process.env.PORT || 3000
+const port: number = 3000
 
 class App {
     private server: http.Server
     private port: number
 
-    constructor(port: any) {
+    constructor(port: number) {
         this.port = port
 
-        this.server = new http.Server();
+        const app = express()
+        app.use(express.static(path.join(__dirname, '../client')))
+
+        this.server = new http.Server(app);
         const io = new socketIO.Server(this.server)
+
+        io.on('connection',(socket: socketIO.Socket)=>{
+            console.log(`utente ${socket.id} connesso al socket server`);
+        })
+
     }
 
     public Start() {
