@@ -13,6 +13,7 @@ class App {
         this.port = port;
         const app = express_1.default();
         app.use(express_1.default.static(path_1.default.join(__dirname, '../client')));
+        app.use('/build/three.module.js', express_1.default.static(path_1.default.join(__dirname, '../../node_modules/three/build/three.module.js')));
         this.server = new http_1.default.Server(app);
         const io = new socket_io_1.default.Server(this.server);
         io.on('connection', (socket) => {
